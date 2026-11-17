@@ -1,0 +1,18 @@
+services:
+  api:
+    build: .
+    container_name: api
+    environment:
+      - HOST_HOSTNAME=${HOST_HOSTNAME:-desconocido}
+    expose:
+      - "5000"
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - api
